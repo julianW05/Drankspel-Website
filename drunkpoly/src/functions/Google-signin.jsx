@@ -26,11 +26,5 @@ const sign_in = () => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
     });
-
-    return (
-        <div>
-            <h1>{user.displayName}</h1>
-        </div>
-    )
 }
 export default sign_in;

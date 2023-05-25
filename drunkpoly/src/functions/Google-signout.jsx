@@ -5,6 +5,7 @@ const sign_out = () => {
     signOut(auth).then(() => {
     // Sign-out successful.
     console.log('signed out')
+    window.location.reload(false);
     }).catch((error) => {
     // An error happened.
     });
