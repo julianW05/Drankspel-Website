@@ -1,6 +1,10 @@
 :root {
   --primary-color: #d92c2e;
+  --primary-color-hover: #b41f21;
   --secondary-color: #f0572d;
+  --secondary-color-hover: #cc431d;
+  --third-color: #37c1f0;
+  --third-color-hover: #1c95bd;
 }
 
 #root {
@@ -26,13 +30,6 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-}
-
-.left, .right, .left .left_background {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .left {
@@ -101,5 +98,72 @@
 }
 
 .login .login_box button:hover {
-  background-color: #cc431d;
+  background-color: var(--secondary-color-hover);
+}
+
+/*---------------DASHBOARD---------------*/
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-image: url("https://media.discordapp.net/attachments/894538357793767474/1111237950131413043/1193x1200.jpg?width=581&height=585");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.dashboard .blur_container {
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard .sign_out {
+  border-radius: 5px;
+  background-color: var(--third-color);
+  transition: all 0.4s ease-in-out;
+}
+
+.dashboard .sign_out:hover {
+  background-color: var(--third-color-hover);
+}
+
+.dashboard .dashboard_content {
+  width: 80%;
+  height: 80%;
+  background-color: #3f3f3f;
+  color: white;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.dashboard .dashboard_games {
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 60px;
+  row-gap: 60px;
+}
+
+.dashboard .dashboard_games .dashboard_game {
+  width: 30%;
+  height: 40%;
+}
+
+.dashboard .dashboard_games .dashboard_game a {
+  text-decoration: none;
+  color: white;
+  background-color: var(--primary-color);
+  transition: all 0.4s ease-in-out;
+}
+
+.dashboard .dashboard_games .dashboard_game a:hover {
+  background-color: var(--primary-color-hover);
 }
