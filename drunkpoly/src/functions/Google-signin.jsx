@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 
 const sign_in = () => {
     const auth = getAuth();
-    let user = [];
 
     signInWithPopup(auth, provider)
     .then((result) => {
@@ -12,7 +11,6 @@ const sign_in = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
-        user = result.user;
         console.log(user);
         // IdP data available using getAdditionalUserInfo(result)
         // ...
