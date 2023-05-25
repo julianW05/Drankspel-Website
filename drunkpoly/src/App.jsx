@@ -1,8 +1,30 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import sign_in from './functions/Google-signin'
-import sign_out from './functions/Google-signout'
+import {
+  createBrowserRouter, 
+  createRoutesFromElements,
+  Route, 
+  RouterProvider,
+  useNavigate
+} from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+// PAGES //
+
+// LAYOUTS //
+import LoginLayout from './layouts/LoginLayout'
+import DashboardLayout from './layouts/DashboardLayout';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LoginLayout />,
+  },
+  {
+    path: "dashboard",
+    element: <DashboardLayout />,
+  },
+]);
 
 function App() {
   const [user, setUser] = useState();
@@ -15,20 +37,18 @@ function App() {
       }});
   }
 
+  const goToDashboard = () => {
+    const navigate = useNavigate();
+    navigate('/dashboard');
+  }
+
   useEffect(() => {
     authUser();
   }, [])
 
   console.log(user);
   return (
-    <div className="App">
-      <div className="nav">
-        <h2>{!user ? '' : 'Welcome ' + user.displayName}</h2>
-        <button onClick={sign_in}>Sign In</button>
-        <button onClick={sign_out}>Sign Out</button>
-      </div>
-      <h1>Drunk Poly</h1>
-    </div>
+    <RouterProvider router={router} />
   )
 }
 

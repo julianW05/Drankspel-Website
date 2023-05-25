@@ -1,8 +1,9 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {db, analytics, provider} from '../Firebase-config'
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const sign_in = () => {
+const sign_in = async() => {
     const auth = getAuth();
 
     signInWithPopup(auth, provider)
@@ -11,7 +12,6 @@ const sign_in = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
-        console.log(user);
         // IdP data available using getAdditionalUserInfo(result)
         // ...
     }).catch((error) => {
@@ -22,6 +22,7 @@ const sign_in = () => {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(error);
         // ...
     });
 }

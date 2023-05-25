@@ -1,6 +1,6 @@
 :root {
-  --primary-color: rgb(43, 118, 118);
-  --secondary-color: rgb(43, 118, 118);
+  --primary-color: #d92c2e;
+  --secondary-color: #f0572d;
 }
 
 #root {
@@ -18,4 +18,88 @@
 
 .nav h2 {
   margin-top: 0px;
+}
+
+/*---------------LOGIN---------------*/
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.left, .right, .left .left_background {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+  min-height: 100%;
+  background: url(https://media.discordapp.net/attachments/894538357793767474/1111237949867180032/1200x1200.jpg?width=585&height=585) #387ecf83;
+  background-size: cover;
+  background-blend-mode: multiply;
+  background-position: right;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+}
+
+.login .details_login {
+  margin-left: 25%;
+  text-align: center;
+  line-height: 37px;
+}
+
+.login .copyright {
+  position: absolute;
+  bottom: 0;
+  right: 15px;
+}
+
+.login .title_content {
+  color: white;
+  margin-left: 20px;
+  margin-top: 20px;
+  display: flex;
+  row-gap: 10px;
+}
+
+.login .title_content .line {
+  border: #37c1f0 2px solid;
+  margin-left: 12px;
+}
+
+.login .login_box {
+  width: 30%;
+  height: 45%;
+  background-color: white;
+  border-radius: 5%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 25%;
+  position: absolute;
+  box-shadow: 0 0 50px #3f3f3f;
+}
+
+.login .login_box h3 {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.login .login_box .login_btns {
+  display: flex;
+  row-gap: 30px;
+  justify-content: space-evenly;
+}
+
+.login .login_box button {
+  background-color: var(--secondary-color);
+  border-radius: 6px;
+  transition: all 0.4s ease-in-out;
+}
+
+.login .login_box button:hover {
+  background-color: #cc431d;
 }
