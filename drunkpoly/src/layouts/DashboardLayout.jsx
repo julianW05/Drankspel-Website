@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink, Link, Outlet, useNavigate } from "react-router-dom";
 import sign_out from '../functions/Google-signout'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import GameLayout from "./GameLayout";
 
 export default function DashboardLayout() {
     const userID = new URLSearchParams(location.search).get('userID');
@@ -31,29 +32,29 @@ export default function DashboardLayout() {
                     <button className="col-md-2 sign_out" onClick={sign_out}>Log uit</button>
                     <div className="col-md-12 dashboard_games">
                         <div className="row dashboard_game">
-                            <a href="">
-                                <h5 className="col-md-12">Nieuwe game</h5>
-                            </a>
+                            <NavLink to="/game" >
+                                    <h5 className="col-md-12">Nieuwe game</h5>
+                            </NavLink>
                         </div>
                         <div className="row dashboard_game">
-                            <a href="">
-                                <h5 className="col-md-12">Game hervatten</h5>
-                            </a>
+                            <NavLink to="/game" >
+                                    <h5 className="col-md-12">Game hervatten</h5>
+                            </NavLink>
                         </div>
                         <div className="row dashboard_game">
-                            <a href="">
-                                <h5 className="col-md-12">Game hervatten</h5>
-                            </a>
+                            <NavLink to="/game" >
+                                    <h5 className="col-md-12">Game hervatten</h5>
+                            </NavLink>
                         </div>
                         <div className="row dashboard_game">
-                            <a href="">
-                                <h5 className="col-md-12">Game hervatten</h5>
-                            </a>
+                            <NavLink to="/game" >
+                                    <h5 className="col-md-12">Game hervatten</h5>
+                            </NavLink>
                         </div>
                         <div className="row dashboard_game">
-                            <a href="">
-                                <h5 className="col-md-12">Game hervatten</h5>
-                            </a>
+                            <NavLink to="/game" >
+                                    <h5 className="col-md-12">Game hervatten</h5>
+                            </NavLink>
                         </div>
                     </div>
                 </div>

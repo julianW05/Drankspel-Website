@@ -12,6 +12,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 // PAGES //
 
 // LAYOUTS //
+import GameLayout from './layouts/GameLayout'
 import LoginLayout from './layouts/LoginLayout'
 import DashboardLayout from './layouts/DashboardLayout';
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <DashboardLayout />,
+  },
+  {
+    path: "game",
+    element: <GameLayout />,
   },
 ]);
 
