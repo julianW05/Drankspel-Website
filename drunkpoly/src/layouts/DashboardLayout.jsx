@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { NavLink, Link, Outlet, useNavigate } from "react-router-dom";
 import sign_out from '../functions/Google-signout'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import GameLayout from "./GameLayout";
 
 export default function DashboardLayout() {
     const userID = new URLSearchParams(location.search).get('userID');
