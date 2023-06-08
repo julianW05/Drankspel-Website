@@ -31,27 +31,12 @@ export default function DashboardLayout() {
                     <button className="col-md-2 sign_out" onClick={sign_out}>Log uit</button>
                     <div className="col-md-12 dashboard_games">
                         <div className="row dashboard_game">
-                            <NavLink to="/game" >
+                            <NavLink to="/game?newGame=true" >
                                     <h5 className="col-md-12">Nieuwe game</h5>
                             </NavLink>
                         </div>
                         <div className="row dashboard_game">
-                            <NavLink to="/game" >
-                                    <h5 className="col-md-12">Game hervatten</h5>
-                            </NavLink>
-                        </div>
-                        <div className="row dashboard_game">
-                            <NavLink to="/game" >
-                                    <h5 className="col-md-12">Game hervatten</h5>
-                            </NavLink>
-                        </div>
-                        <div className="row dashboard_game">
-                            <NavLink to="/game" >
-                                    <h5 className="col-md-12">Game hervatten</h5>
-                            </NavLink>
-                        </div>
-                        <div className="row dashboard_game">
-                            <NavLink to="/game" >
+                            <NavLink to="game" >
                                     <h5 className="col-md-12">Game hervatten</h5>
                             </NavLink>
                         </div>
