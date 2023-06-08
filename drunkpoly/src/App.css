@@ -167,3 +167,110 @@
 .dashboard .dashboard_games .dashboard_game a:hover {
   background-color: var(--primary-color-hover);
 }
+
+/*---------------GAME---------------*/
+
+.game {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-image: url("https://media.discordapp.net/attachments/894538357793767474/1111237949867180032/1200x1200.jpg?width=662&height=662");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.game .blur_container {
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game .game_content {
+  height: 847.391px;
+  width: 847.391px;
+  background-image: url("https://media.discordapp.net/attachments/894538357793767474/1111237950131413043/1193x1200.jpg?width=581&height=585");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding: 7px 9px;
+}
+
+.game .game_content .vak {
+  background-color: #3f3f3f80;
+  border: #1c95bd 2px solid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  row-gap: 10px;
+  column-gap: 20px;
+}
+
+.game .game_content .upper_row {
+  height: 100px;
+  width: 8%;
+  padding: 15px 0px;
+}
+
+.game .game_content .upper_row_main, .game .game_content .lower_row_main {
+  display: flex;
+  flex-direction: row;
+  column-gap: 4px;
+  padding: 0px;
+  height: 100px;
+}
+
+.upper_row_main, .left_row_main, .right_row_main, .lower_row_main, .center {
+  border: orchid 2px solid;
+}
+
+.game .game_content .side_row {
+  width: 100%;
+  height: 10.5%;
+  padding: 0px 15px;
+}
+
+.game .game_content .left_row_main, .game .game_content .right_row_main {
+  width: 11.5%;
+  height: 627px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.game .game_content .center {
+  width: 638px;
+  height: 627px;
+}
+
+.game .game_content .corner_vak {
+  width: 11.5% !important;
+  padding: 0px !important;
+}
+
+.blauw, .rood, .geel, .groen {
+  width: 25%;
+  height: 25%;
+  border-radius: 300px;
+}
+
+.blauw {
+  background-color: #1c95bd;
+}
+
+.rood {
+  background-color: #bd1c1c;
+}
+
+.geel {
+  background-color: #bdbd1c;
+}
+
+.groen {
+  background-color: #1cbd1c;
+}
