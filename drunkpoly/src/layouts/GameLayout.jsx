@@ -15,9 +15,11 @@ const customStyles = {
 };
 
 export default function DashboardLayout() {
-  const [user, setUser] = useState();
-  const navigate = useNavigate();
-  const auth = getAuth();
+    const newGame = new URLSearchParams(location.search).get('newGame');
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [user, setUser] = useState();
+    const navigate = useNavigate();
+    const auth = getAuth();
 
   const authUser = async () => {
       onAuthStateChanged(auth, (userData) => {
@@ -30,11 +32,9 @@ export default function DashboardLayout() {
 
   useEffect(() => {
       authUser();
+      openModal();
   }, [])
 
-  const newGame = new URLSearchParams(location.search).get('newGame');
-
-  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   let subtitle;
   function openModal() {
@@ -51,17 +51,8 @@ export default function DashboardLayout() {
   }
     
     return (
-      
-          <div className="dashboard">
-          <h1>game</h1>
-          <button onClick={openModal}>Open Modal</button>
-          <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
+        <div className="game">
+            <Modal isOpen={modalIsOpen} onAfterOpen={afterOpenModal} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
             <h2>Make new game</h2>
             <form>
               <input />
@@ -71,9 +62,6 @@ export default function DashboardLayout() {
               <button>the modal</button>
             </form>
           </Modal>
-        </div>
-      
-        <div className="game">
             <div className="blur_container">
                 <div className="game_content row">
                     <div className="upper_row_main col-md-12">
