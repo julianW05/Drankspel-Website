@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged,  } from "firebase/auth";
 import { NavLink, Link, Outlet, useNavigate } from "react-router-dom";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
 import Modal from 'react-modal';
 import { db } from '../Firebase-config.jsx';
 
@@ -78,29 +78,45 @@ export default function DashboardLayout() {
       const uid = "nV5lUuro24Q1S9vzCJOdvi2fcE82";
 
       // 2. Access the user document and create a new game in the 'games' collection
-      const userDocRef = db.collection('users').where('uid', '==', uid);
-      const userSnapshot = await userDocRef.get();
+      const userDocRef = query(collection(db, "users"), where('uid', '==', uid));
+      const userSnapshot = await getDocs(userDocRef);
 
       if (userSnapshot.empty) {
         console.error('User document not found');
         return;
       }
 
-      const userDoc = userSnapshot.docs[0];
-      const gamesCollection = userDoc.ref.collection('games');
-      const newGameRef = gamesCollection.doc();
+      userSnapshot.forEach(async (document) => {
+        const user = doc(db, "users", document.id);
+        const gamesCollection = await addDoc(collection(user, "games"), {
+            game_name: gameName
+          });
+          const playerCollection = await addDoc(collection(gamesCollection, "players"), {
+            placeholder: ""
+          });
+          const player_1 = doc(db, 'users', document.id, gamesCollection, playerCollection, "player_1")
+          await setDoc(player_1, {
+              name: player1,
+              position: 1
+          });
+            const player_2 = doc(db, playerCollection, "player_2");
+            await setDoc(player_2, {
+                name: player2,
+                position: 1
+            });
+            const player_3 = doc(db, playerCollection, "player_3");
+            await setDoc(player_3, {
+                name: player3,
+                position: 1
+            });
+            const player_4 = doc(db, playerCollection, "player_4");
+            await setDoc(player_4, {
+                name: player4,
+                position: 1
+            });
+      });
+      
 
-      // 3. Set the game name in the 'games' collection
-      await newGameRef.set({ gameName });
-
-      // 4. Create 'player1', 'player2', 'player3', and 'player4' collections
-      const playersCollection = newGameRef.collection('players');
-
-      // Create player documents with position 0
-      await playersCollection.doc('player1').set({ name: player1, position: 0 });
-      await playersCollection.doc('player2').set({ name: player2, position: 0 });
-      await playersCollection.doc('player3').set({ name: player3, position: 0 });
-      await playersCollection.doc('player4').set({ name: player4, position: 0 });
 
       // Clear the form data
       setFormData({

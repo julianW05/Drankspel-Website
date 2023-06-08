@@ -19,12 +19,6 @@ export default function LoginLayout() {
           const docRef = await addDoc(collection(db, "users"), {
             uid: userData.uid
           });
-          const subcollectionRef = await addDoc(collection(docRef, "games"), {
-            player_1: "",
-            player_2: "",
-            player_3: "",
-            player_4: ""
-          });
         }
         querySnapshot.forEach(async (doc) => {
         });
