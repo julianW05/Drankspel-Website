@@ -1,5 +1,5 @@
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import {db, analytics, provider} from '../Firebase-config'
 import { useEffect, useState } from 'react'
 import sign_in from '../functions/Google-signin'
@@ -11,8 +11,24 @@ export default function LoginLayout() {
   const navigate = useNavigate();
 
   const authUser = async () => {
-    onAuthStateChanged(auth, (userData) => {
+    onAuthStateChanged(auth, async (userData) => {
       if (userData) {
+        const q = query(collection(db, "users"), where("uid", "==", userData.uid));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          const docRef = await addDoc(collection(db, "users"), {
+            uid: userData.uid
+          });
+          const subcollectionRef = await addDoc(collection(docRef, "games"), {
+            player_1: "",
+            player_2: "",
+            player_3: "",
+            player_4: ""
+          });
+        }
+        querySnapshot.forEach(async (doc) => {
+        });
+        console.log(userData);
         navigate('/dashboard');
       }});
   }
