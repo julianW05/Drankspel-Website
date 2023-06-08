@@ -61,9 +61,7 @@ export default function DashboardLayout() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
+        <h2>Make new game</h2>
         <form>
           <input />
           <button>tab navigation</button>

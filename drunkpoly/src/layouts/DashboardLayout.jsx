@@ -36,7 +36,7 @@ export default function DashboardLayout() {
                             </NavLink>
                         </div>
                         <div className="row dashboard_game">
-                            <NavLink to="/game?newGame=false" >
+                            <NavLink to="game" >
                                     <h5 className="col-md-12">Game hervatten</h5>
                             </NavLink>
                         </div>
