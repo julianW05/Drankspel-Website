@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged,  } from "firebase/auth";
 import { NavLink, Link, Outlet, useNavigate } from "react-router-dom";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import Modal from 'react-modal';
+import { db } from '../Firebase-config.jsx';
 
 const customStyles = {
   content: {
@@ -49,17 +51,114 @@ export default function DashboardLayout() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  // Create game -----------------------------------
+  const [formData, setFormData] = useState({
+    gameName: '',
+    player1: '',
+    player2: '',
+    player3: '',
+    player4: ''
+  });
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const handleAddGame = async (event) => {
+    event.preventDefault();
+
+    const { gameName, player1, player2, player3, player4 } = formData;
+
+    try {
+      // 1. Collect the UID from the Google login (assuming you already have it)
+      const uid = "nV5lUuro24Q1S9vzCJOdvi2fcE82";
+
+      // 2. Access the user document and create a new game in the 'games' collection
+      const userDocRef = db.collection('users').where('uid', '==', uid);
+      const userSnapshot = await userDocRef.get();
+
+      if (userSnapshot.empty) {
+        console.error('User document not found');
+        return;
+      }
+
+      const userDoc = userSnapshot.docs[0];
+      const gamesCollection = userDoc.ref.collection('games');
+      const newGameRef = gamesCollection.doc();
+
+      // 3. Set the game name in the 'games' collection
+      await newGameRef.set({ gameName });
+
+      // 4. Create 'player1', 'player2', 'player3', and 'player4' collections
+      const playersCollection = newGameRef.collection('players');
+
+      // Create player documents with position 0
+      await playersCollection.doc('player1').set({ name: player1, position: 0 });
+      await playersCollection.doc('player2').set({ name: player2, position: 0 });
+      await playersCollection.doc('player3').set({ name: player3, position: 0 });
+      await playersCollection.doc('player4').set({ name: player4, position: 0 });
+
+      // Clear the form data
+      setFormData({
+        gameName: '',
+        player1: '',
+        player2: '',
+        player3: '',
+        player4: ''
+      });
+
+      console.log('Game created successfully!');
+    } catch (error) {
+      console.error('Error creating game:', error);
+    }
+  };
     
     return (
         <div className="game">
             <Modal isOpen={modalIsOpen} onAfterOpen={afterOpenModal} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
             <h2>Make new game</h2>
-            <form>
-              <input />
-              <button>tab navigation</button>
-              <button>stays</button>
-              <button>inside</button>
-              <button>the modal</button>
+            <form onSubmit={handleAddGame}>
+            {/* Render your form inputs here */}
+            <input
+                type="text"
+                name="gameName"
+                onChange={handleInputChange}
+                placeholder="Game naam"
+                value={formData.gameName}
+            />
+            <input
+                type="text"
+                name="player1"
+                onChange={handleInputChange}
+                placeholder="Player 1"
+                value={formData.player1}
+            />
+            <input
+                type="text"
+                name="player2"
+                onChange={handleInputChange}
+                placeholder="Player 2"
+                value={formData.player2}
+            />
+            <input
+                type="text"
+                name="player3"
+                onChange={handleInputChange}
+                placeholder="Player 3"
+                value={formData.player3}
+            />
+            <input
+                type="text"
+                name="player4"
+                onChange={handleInputChange}
+                placeholder="Player 4"
+                value={formData.player4}
+            />
+            <button type="submit">Create game</button>
             </form>
           </Modal>
             <div className="blur_container">

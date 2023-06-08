@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "firestore": "^1.1.6",
     "react-modal": "^3.16.1"
   }
 }
