@@ -75,7 +75,16 @@ export default function DashboardLayout() {
 
     try {
       // 1. Collect the UID from the Google login (assuming you already have it)
-      const uid = "nV5lUuro24Q1S9vzCJOdvi2fcE82";
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        console.error('User not authenticated');
+        return;
+      }
+
+      const uid = user.uid;
+      console.log('User UID:', uid);
 
       // 2. Access the user document and create a new game in the 'games' collection
       const userDocRef = query(collection(db, "users"), where('uid', '==', uid));
@@ -88,32 +97,36 @@ export default function DashboardLayout() {
 
       userSnapshot.forEach(async (document) => {
         const user = doc(db, "users", document.id);
-        const gamesCollection = await addDoc(collection(user, "games"), {
-            game_name: gameName
-          });
-          const playerCollection = await addDoc(collection(gamesCollection, "players"), {
-            placeholder: ""
-          });
-          const player_1 = doc(db, 'users', document.id, gamesCollection, playerCollection, "player_1")
-          await setDoc(player_1, {
-              name: player1,
-              position: 1
-          });
-            const player_2 = doc(db, playerCollection, "player_2");
-            await setDoc(player_2, {
-                name: player2,
-                position: 1
-            });
-            const player_3 = doc(db, playerCollection, "player_3");
-            await setDoc(player_3, {
-                name: player3,
-                position: 1
-            });
-            const player_4 = doc(db, playerCollection, "player_4");
-            await setDoc(player_4, {
-                name: player4,
-                position: 1
-            });
+        const gamesCollectionRef = collection(user, "games");
+        const gameDocRef = await addDoc(gamesCollectionRef, {
+            gameName: gameName
+        });
+
+        const playersCollectionRef = collection(gameDocRef, "players");
+
+        const player1DocRef = doc(playersCollectionRef, "player1");
+        await setDoc(player1DocRef, {
+            name: player1,
+            position: 1
+        });
+
+        const player2DocRef = doc(playersCollectionRef, "player2");
+        await setDoc(player2DocRef, {
+            name: player2,
+            position: 1
+        });
+
+        const player3DocRef = doc(playersCollectionRef, "player3");
+        await setDoc(player3DocRef, {
+            name: player3,
+            position: 1
+        });
+
+        const player4DocRef = doc(playersCollectionRef, "player4");
+        await setDoc(player4DocRef, {
+            name: player4,
+            position: 1
+        });
       });
       
 
