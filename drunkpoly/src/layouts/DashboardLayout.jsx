@@ -6,7 +6,7 @@ import {query, collection, where, getDocs, doc} from 'firebase/firestore';
 import {db} from '../Firebase-config';
 
 export default function DashboardLayout() {
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState();
     const navigate = useNavigate();
     const auth = getAuth();
     let gamesTemp = [];
@@ -24,6 +24,7 @@ export default function DashboardLayout() {
     }
 
     const getGames = async () => {
+        try {
         const userDocRef = query(collection(db, "users"), where('uid', '==', user.uid));
         const userSnapshot = await getDocs(userDocRef);
 
@@ -42,7 +43,11 @@ export default function DashboardLayout() {
             });
             setGames(gamesTemp);
             setGamesId(gamesIdTemp);
+            console.log(gamesId);
         });
+    } catch (error) {
+        console.log(error);
+    }
     }       
 
     useEffect(() => {
@@ -50,8 +55,9 @@ export default function DashboardLayout() {
     }, [])
 
     useEffect(() => {
+        if (user) {
         console.log(user);
-        getGames();
+        getGames();}
     }, [user]);
 
     return (
@@ -66,13 +72,13 @@ export default function DashboardLayout() {
                                     <h5 className="col-md-12">Nieuwe game</h5>
                             </NavLink>
                         </div>
-                        {gamesId ? gamesId.map((gameId) => {
+                        {gamesId?.map((gameId) => {
                         <div className="row dashboard_game">
                             <NavLink to={`/game/${gameId}`} >
                                     <h5 className="col-md-12">Game hervatten</h5>
                             </NavLink>
                         </div>
-                        }) : ''}
+                        })}
                     </div>
                 </div>
             </div>
