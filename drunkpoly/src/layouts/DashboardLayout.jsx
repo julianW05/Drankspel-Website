@@ -21,19 +21,22 @@ export default function DashboardLayout() {
             navigate('/');
           } else if (userData) {
             setUser(userData);
-            setUid(userData.uid);
+            getGames();
           }});
       }
 
-      useEffect(() => {
-        authUser();
-        getGames();
-    }, [user])
-
     const getGames = async () => {
-        console.log(user);
-        const userDocRef = query(collection(db, "users"), where('uid', '==', uid));
+
+        console.log(uid);
+
+        const userDocRef = query(collection(db, "users"), where('uid', '==', user.uid));
         const userSnapshot = await getDocs(userDocRef);
+
+        if (userSnapshot.empty) {
+            console.error('User document not found');
+            return;
+          }
+
         userSnapshot.forEach(async (document) => {
             const user_db = doc(db, "users", document.id);
             const gamesCollectionRef = query(collection(user_db, "games"));
@@ -47,6 +50,10 @@ export default function DashboardLayout() {
         });
     }       
 
+    useEffect(() => {
+        authUser();
+    }, [])
+
     return (
         <div className="dashboard">
             <div className="blur_container">
@@ -55,7 +62,7 @@ export default function DashboardLayout() {
                     <button className="col-md-2 sign_out" onClick={sign_out}>Log uit</button>
                     <div className="col-md-12 dashboard_games">
                         <div className="row dashboard_game">
-                            <NavLink to={`/game/${null}`} >
+                            <NavLink to={`/game/${undefined}`} >
                                     <h5 className="col-md-12">Nieuwe game</h5>
                             </NavLink>
                         </div>

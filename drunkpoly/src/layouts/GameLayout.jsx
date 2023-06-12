@@ -7,7 +7,6 @@ import game_form from '../components/Game_modal.jsx';
 
 export default function GameLayout() {
     const gameId = useParams();
-    const newGame = new URLSearchParams(location.search).get('newGame');
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const [user, setUser] = useState();
     const navigate = useNavigate();
@@ -25,7 +24,12 @@ export default function GameLayout() {
     console.log(gameId);
 
   useEffect(() => {
-      authUser();
+    authUser();
+    if (gameId == "undefined") {
+    game_form();
+    } else {
+        console.log(gameId);
+    }
   }, [])
     
     return (
