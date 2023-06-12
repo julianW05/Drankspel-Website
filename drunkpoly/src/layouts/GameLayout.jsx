@@ -25,8 +25,8 @@ export default function GameLayout() {
 
   useEffect(() => {
     authUser();
-    if (gameId == "undefined") {
-    game_form();
+    if (gameId.gameId === "null") {
+    navigate("/gameModal");
     } else {
         console.log(gameId);
     }
