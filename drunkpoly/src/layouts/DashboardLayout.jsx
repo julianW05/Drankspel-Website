@@ -7,7 +7,6 @@ import {db} from '../Firebase-config';
 
 export default function DashboardLayout() {
     const [user, setUser] = useState([]);
-    const [uid, setUid] = useState();
     const navigate = useNavigate();
     const auth = getAuth();
     let gamesTemp = [];
@@ -17,18 +16,14 @@ export default function DashboardLayout() {
 
     const authUser = async () => {
         onAuthStateChanged(auth, (userData) => {
-          if (!userData) {
+        if (!userData) {
             navigate('/');
-          } else if (userData) {
+        } else if (userData) {
             setUser(userData);
-            getGames();
-          }});
-      }
+        }});
+    }
 
     const getGames = async () => {
-
-        console.log(uid);
-
         const userDocRef = query(collection(db, "users"), where('uid', '==', user.uid));
         const userSnapshot = await getDocs(userDocRef);
 
@@ -53,6 +48,11 @@ export default function DashboardLayout() {
     useEffect(() => {
         authUser();
     }, [])
+
+    useEffect(() => {
+        console.log(user);
+        getGames();
+    }, [user]);
 
     return (
         <div className="dashboard">
