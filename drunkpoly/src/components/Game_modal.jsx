@@ -103,7 +103,7 @@ const GameModal = () => {
           const playerDocRef = doc(playersCollectionRef, `player${i + 1}`);
           await setDoc(playerDocRef, {
             name: playerName,
-            position: i + 1
+            position: 1
           });
         }
 
