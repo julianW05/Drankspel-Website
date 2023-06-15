@@ -49,6 +49,23 @@ const GameModal = () => {
 
       const { gameName, player1, player2, player3, player4 } = formData;
 
+      if (!gameName) {
+        alert('Game name is required');
+        return;
+      } else if (!player1) {
+        alert('Speler 1 is vereist');
+        return;
+      } else if (!player2) {
+        alert('Speler 2 is vereist');
+        return;
+      } else if (!player3) {
+        alert('Speler 3 is vereist');
+        return;
+      } else if (!player4) {
+        alert('Speler 4 is vereist');
+        return;
+      }
+
       try {
         // 2. Access the user document and create a new game in the 'games' collection
         const userDocRef = query(collection(db, "users"), where('uid', '==', user.uid));
