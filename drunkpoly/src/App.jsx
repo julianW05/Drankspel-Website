@@ -11,6 +11,9 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // PAGES //
 
+// COMPONENTS //
+import GameModal from './components/Game_modal'
+
 // LAYOUTS //
 import GameLayout from './layouts/GameLayout'
 import LoginLayout from './layouts/LoginLayout'
@@ -26,8 +29,13 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
   },
   {
-    path: "game",
+    path: "game/:gameId",
     element: <GameLayout />,
+    children: [
+      {
+        path: "gameModal",
+        element:  <GameModal />,
+      },]
   },
 ]);
 
