@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged,  } from "firebase/auth";
+import { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { NavLink, Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import { collection, query, where, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
 import { db } from '../Firebase-config.jsx';
@@ -7,7 +7,6 @@ import game_form from '../components/Game_modal.jsx';
 
 export default function GameLayout() {
     const gameId = useParams();
-    const [modalIsOpen, setIsOpen] = React.useState(false);
     const [user, setUser] = useState();
     const navigate = useNavigate();
     const auth = getAuth();
@@ -21,20 +20,21 @@ export default function GameLayout() {
         }});
     }
 
+    const backToDashboard = () => {
+        navigate('/dashboard');
+    }
+
     console.log(gameId);
 
   useEffect(() => {
     authUser();
-    if (gameId.gameId === "null") {
-    navigate("/gameModal");
-    } else {
-        console.log(gameId);
-    }
   }, [])
     
     return (
         <div className="game">
             <div className="blur_container">
+                <button className="btnBack" onClick={backToDashboard}>Terug</button>
+                <Outlet />
                 <div className="game_content row">
                     <div className="upper_row_main col-md-12">
                         <div className="vak_21 corner_vak vak upper_row">

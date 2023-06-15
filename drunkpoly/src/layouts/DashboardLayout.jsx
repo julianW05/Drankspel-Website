@@ -39,7 +39,6 @@ export default function DashboardLayout() {
         setGamesId((prevGamesId) => [...prevGamesId, documentGames.id]);
         setGames((prevGames) => [...prevGames, documentGames.data().gameName]);
       });
-      console.log(gamesId);
     });
   };
 
@@ -62,14 +61,14 @@ export default function DashboardLayout() {
           <button className="col-md-2 sign_out" onClick={sign_out}>Log uit</button>
           <div className="col-md-12 dashboard_games">
             <div className="row dashboard_game">
-              <NavLink to={`/game/${null}`} >
-                <h5 className="col-md-12">Nieuwe game</h5>
+              <NavLink to={`/game/${null}/gameModal`} >
+                <h5 className="col-md-12">Nieuw Spel</h5>
               </NavLink>
             </div>
-            {gamesId.map((gameId) => (
+            {gamesId.map((gameId, index) => (
               <div className="row dashboard_game" key={gameId}>
                 <NavLink to={`/game/${gameId}`} >
-                  <h5 className="col-md-12">Game hervatten</h5>
+                  <h5 className="col-md-12">{games[index]}</h5>
                 </NavLink>
               </div>
             ))}
