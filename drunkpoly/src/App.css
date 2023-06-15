@@ -183,16 +183,24 @@
 
 .ReactModal__Content {
   position: unset !important;
-  width: 40%;
-  height: 60%;
+  width: 30%;
   text-align: center;
   display: flex;
   flex-direction: column; 
-  row-gap: 20px;
+  row-gap: 50px;
   border-radius: 10px !important;
+  padding: 50px 0px !important;
 }
 
 .ReactModal__Content form {
+  display: flex;
+  flex-direction: column; 
+  row-gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ReactModal__Content form div {
   display: flex;
   flex-direction: column; 
   row-gap: 10px;
@@ -208,6 +216,7 @@
   background-color: var(--secondary-color);
   border-radius: 6px;
   transition: all 0.4s ease-in-out;
+  margin-top: 20px;
 }
 
 .ReactModal__Content button:hover {
