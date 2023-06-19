@@ -1,0 +1,44 @@
+/*---------------GAME RESPONSIVENESS---------------*/   
+
+@media screen and (max-width: 1250px) {
+    .game .game_content {
+        height: 700px;
+        width: 700px;
+        margin-left: 150px;
+    }
+
+    .game .game_content .upper_row_main, .game .game_content .lower_row_main {
+        height: 12%;
+    }
+
+    .game .game_content .left_row_main, .game .game_content .right_row_main {
+        height: 76%;
+    }
+
+    .game .game_content .center {
+        width: 77%;
+        height: 76%;
+    }
+
+    .game .game_content .upper_row {
+        padding: 10px 0px;
+    }
+
+    .game .game_content .side_row {
+        padding: 0px 10px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .game .game_content {
+        height: 600px;
+        width: 600px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .game .game_content {
+        height: 500px;
+        width: 500px;
+    }
+}
