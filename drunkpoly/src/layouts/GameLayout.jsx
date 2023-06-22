@@ -37,7 +37,6 @@ export default function GameLayout() {
   };
 
   // Game opslaat na refresh of pagina terug -----------------------------------------------------------
-
   const handleGoBack = async() => {
     const confirmationMessage = 'Weet je zeker dat je terug wilt?';
     if (window.confirm(confirmationMessage)) {
@@ -91,6 +90,7 @@ export default function GameLayout() {
   };
 
   useEffect(() => {
+    // Check of user pagina wil verlaten -----------------------------------------------------------
     const handleBeforeUnload = (e) => {
       const confirmationMessage = 'Weet je zeker dat je deze pagina wilt verlaten?';
       e.preventDefault();
@@ -116,8 +116,6 @@ export default function GameLayout() {
       window.removeEventListener('popstate', handlePopState);
     };
   }, []);
-
-  // Game functionaliteiten -----------------------------------------------------------
 
   // Get the gamedata from the database -----------------------------------------------------------
   const getUser = async () => {
@@ -216,10 +214,6 @@ export default function GameLayout() {
             <div className="blur_container">
                 <div className="legend">
                     <div className="legend_item_container row"><strong>{gameName}</strong></div>
-                    <div className="legend_item_container row">
-
-                        <div className="legend_item col-md-9">{gameName}</div>
-                    </div>
                     <div className="legend_item_container row">
                         <div className="blauw col-md-2"></div>
                         <div className="legend_item col-md-9">{playerNames.player1}</div>

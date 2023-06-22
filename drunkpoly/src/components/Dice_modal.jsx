@@ -5,10 +5,12 @@ import AssignmentModal from './AssignmentModal_modal';
 
 const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, setPlayerPositions }) => {
     const [modalIsOpen, setIsOpen] = useState(false);
+
     const [dice, setDice] = useState(0);
     const [showDice, setShowDice] = useState(false);
     const [showResult, setShowResult] = useState(false);
     const [showAssignmentModal, setShowAssignmentModal] = useState(false);
+
     const [aantalPlayers, setAantalPlayers] = useState(0);
     const [movedPosition, setMovedPosition] = useState(false);
     const [skipTurn, setSkipTurn] = useState(false);
@@ -19,18 +21,21 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
         player4: 0
     });
 
+    // Open dobbelsteen modal
     const openModal = () => {
         setIsOpen(true);
         setShowDice(false);
         setShowResult(false);
     };
 
+    // Rol dobbelsteen
     const roleTheDice = () => {
         setDice(Math.floor(Math.random() * 12) + 2);
         setShowDice(true);
         setShowResult(true);
     };
 
+    // Rol dobbelsteen wanneer er op dobbelsteen wordt geklikt
     const handleButtonClick = () => {
         const currentPosition = playerPositions[`player${playerTurn}`];
 
@@ -68,6 +73,7 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
         roleTheDice();
     };
 
+    // Verander de positie wanneer er op ga verder wordt geklikt
     const handleContinue = () => {
         setIsOpen(false);
 
@@ -91,13 +97,16 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
         }
     };
 
+    // Laat de opdracht zien
     const handleSeeAssignment = () => {
         setShowAssignmentModal(true);
     };
 
+    // Sluit de opdracht modal
     const handleCloseAssignmentModal = () => {
         setShowAssignmentModal(false);
 
+        // Als speler van positie is verandert in zelfde beurt laat nieuw opdracht zien
         if (movedPosition === true) {
             setShowResult(true);
         } else {

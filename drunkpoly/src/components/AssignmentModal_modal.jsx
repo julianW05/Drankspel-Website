@@ -8,6 +8,7 @@ const AssignmentModal = ({ playerTurn, playerNames, playerPositions, setPlayerPo
     const [ExercieTitle, setExercieTitle] = useState('');
     const [ExercieDescription, setExercieDescription] = useState('');
 
+    // Dobbelstenen
     const [dice, setDice] = useState(0);
     const [dice2, setDice2] = useState(0);
     const [showDice, setShowDice] = useState(false);
@@ -28,6 +29,7 @@ const AssignmentModal = ({ playerTurn, playerNames, playerPositions, setPlayerPo
         const currentPlayerPosition = playerPositions[`player${playerTurn}`];
         let currentVakje = '';
 
+        // Zet de naam van het vakje waar de speler op staat
         if (currentPlayerPosition == 1) {
             currentVakje = "start";
         } else if (currentPlayerPosition == 2 || currentPlayerPosition == 17) {
@@ -193,7 +195,7 @@ const AssignmentModal = ({ playerTurn, playerNames, playerPositions, setPlayerPo
         }
     };
 
-    // Extra rollen voor drie man
+    // Extra dobbelsteen
     const roleTheDice = () => {
         setDice(Math.floor(Math.random() * 6) + 1);
         setDice2(Math.floor(Math.random() * 6) + 1);
