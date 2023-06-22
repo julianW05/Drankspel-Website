@@ -94,7 +94,8 @@ const GameModal = () => {
         const user_db = doc(db, "users", document.id);
         const gamesCollectionRef = collection(user_db, "games");
         const gameDocRef = await addDoc(gamesCollectionRef, {
-          gameName: gameName
+          gameName: gameName,
+          playerturn: 1
         });
 
         const playersCollectionRef = collection(gameDocRef, "players");
