@@ -115,11 +115,11 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
     return (
     <div>
         {showResult && (
-            <button onClick={handleSeeAssignment}>Zie opdracht</button>
+            <button className="btnNext" onClick={handleSeeAssignment}>Zie opdracht</button>
         )}
 
         {!showResult && (
-            <button className="" onClick={openModal}>
+            <button className="btnNext" onClick={openModal}>
                 Volgende speler
             </button>
         )}
