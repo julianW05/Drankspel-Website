@@ -17,6 +17,12 @@ export default function GameLayout() {
     player3: 0,
     player4: 0
   });
+  const [playerNames, setPlayerNames] = useState({
+    player1: '',
+    player2: '',
+    player3: '',
+    player4: ''
+  });
   const [playerTurn, setPlayerTurn] = useState(1);
 
   const authUser = async () => {
@@ -61,27 +67,49 @@ export default function GameLayout() {
         });
 
         playerDocRef.forEach(async (document) => {
-            console.log(document.id);
             if (document.id == "player1") {
+                // Player postion
                 setPlayerPositions((prevState) => ({
-                ...prevState,
-                player1: document.data().position
+                    ...prevState,
+                    player1: document.data().position
+                }));
+                // Player name
+                setPlayerNames((prevState) => ({
+                    ...prevState,
+                    player1: document.data().name
                 }));
             } else if (document.id == "player2") {
+                // Player postion
                 setPlayerPositions((prevState) => ({
-                ...prevState,
-                player2: document.data().position
+                    ...prevState,
+                    player2: document.data().position
+                }));
+                // Player name
+                setPlayerNames((prevState) => ({
+                    ...prevState,
+                    player2: document.data().name
                 }));
             } else if (document.id == "player3") {
+                // Player postion
                 setPlayerPositions((prevState) => ({
-                ...prevState,
-                player3: document.data().position
+                    ...prevState,
+                    player3: document.data().position
+                }));
+                // Player name
+                setPlayerNames((prevState) => ({
+                    ...prevState,
+                    player3: document.data().name
                 }));
             } else if (document.id == "player4") {
-                console.log("player 4 gevonden")
+                // Player postion
                 setPlayerPositions((prevState) => ({
-                ...prevState,
-                player4: document.data().position
+                    ...prevState,
+                    player4: document.data().position
+                }));
+                // Player name
+                setPlayerNames((prevState) => ({
+                    ...prevState,
+                    player4: document.data().name
                 }));
             } else {
                 console.error('Player document not found');
@@ -110,28 +138,22 @@ export default function GameLayout() {
                 <div className="legend">
                     <div className="legend_item_container row">
                         <div className="blauw col-md-2"></div>
-                        <div className="legend_item col-md-9">Speler 1</div>
+                        <div className="legend_item col-md-9">{playerNames.player1}</div>
                     </div>
                     <div className="legend_item_container row">
                         <div className="rood col-md-2"></div>
-                        <div className="legend_item col-md-9">Speler 2</div>
+                        <div className="legend_item col-md-9">{playerNames.player2}</div>
                     </div>
                     <div className="legend_item_container row">
                         <div className="groen col-md-2"></div>
-                        <div className="legend_item col-md-9">Speler 3</div>
+                        <div className="legend_item col-md-9">{playerNames.player3}</div>
                     </div>
                     <div className="legend_item_container row">
                         <div className="geel col-md-2"></div>
-                        <div className="legend_item col-md-9">Speler 4</div>
+                        <div className="legend_item col-md-9">{playerNames.player4}</div>
                     </div>
                 </div>
                 <button className="btnBack" onClick={backToDashboard}>Terug</button>
-                <DiceModal
-                    playerPositions={playerPositions}
-                    playerTurn={playerTurn}
-                    setPlayerTurn={setPlayerTurn}
-                />
-
                 <Outlet />
                 <div className="game_content row">
                     <div className="upper_row_main col-md-12">
@@ -384,6 +406,13 @@ export default function GameLayout() {
                         </div>
                     </div>
                 </div>
+                <DiceModal
+                    playerPositions={playerPositions}
+                    playerTurn={playerTurn}
+                    setPlayerTurn={setPlayerTurn}
+                    playerNames={playerNames}
+                    setPlayerPositions={setPlayerPositions}
+                />
             </div>
         </div>
     )
