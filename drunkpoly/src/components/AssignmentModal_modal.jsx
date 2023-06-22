@@ -8,6 +8,10 @@ const AssignmentModal = ({ playerTurn, playerNames, playerPositions, onClose, aa
     const [ExercieTitle, setExercieTitle] = useState('');
     const [ExercieDescription, setExercieDescription] = useState('');
 
+    const [dice, setDice] = useState(0);
+    const [showDice, setShowDice] = useState(false);
+    const [showExtraDice, setshowExtraDice] = useState(false);
+
     const showExercise = async () => {
         const currentPlayerName = playerNames[`player${playerTurn}`];
         const currentPlayerPosition = playerPositions[`player${playerTurn}`];
@@ -108,10 +112,19 @@ const AssignmentModal = ({ playerTurn, playerNames, playerPositions, onClose, aa
         }
 
         // Check of er een extra dobbelsteen gegooid moet worden
-        if (currentVakje === "drie man" || currentVakje === "time to get drunk") {
-            console.log("Je mag nog een keer gooien");
+        if (currentVakje === "drie man") {
+            setshowExtraDice(true);
+        } else {
+            setshowExtraDice(false);
         }
     };
+
+    // Extra rollen voor drie man
+    const roleTheDice = () => {
+        setDice(Math.floor(Math.random() * 12) + 1);
+        setShowDice(true);
+    };
+
 
     useEffect(() => {
         showExercise();
@@ -122,8 +135,15 @@ const AssignmentModal = ({ playerTurn, playerNames, playerPositions, onClose, aa
             <h2>Opdracht van: {assignmentPlayerName}</h2>
             <h3>{ExercieTitle}</h3>
             <p>{ExercieDescription}</p>
+
+            {!showDice && showExtraDice && (
+                <button onClick={roleTheDice}>Dobbel</button>
+            )}
+            {showDice && showExtraDice && (<p>{dice}</p>)}
+
             <button onClick={onClose}>Sluiten</button>
         </Modal>
+        
     );
 };
 

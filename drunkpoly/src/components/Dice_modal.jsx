@@ -24,8 +24,8 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
     };
 
     const roleTheDice = () => {
-        if (playerTurn === 2) {
-            setDice(23);
+        if (playerTurn === 1) {
+            setDice(8);
         } else {
             setDice(Math.floor(Math.random() * 12) + 1);
         }
