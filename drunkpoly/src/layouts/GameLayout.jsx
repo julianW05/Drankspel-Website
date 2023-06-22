@@ -108,6 +108,7 @@ export default function GameLayout() {
         <div className="game">
             <div className="blur_container">
                 <div className="legend">
+                    <div className="legend_item_container row">Game Naam</div>
                     <div className="legend_item_container row">
                         <div className="blauw col-md-2"></div>
                         <div className="legend_item col-md-9">Speler 1</div>
