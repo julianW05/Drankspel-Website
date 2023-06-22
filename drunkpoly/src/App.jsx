@@ -60,7 +60,6 @@ function App() {
     authUser();
   }, [])
 
-  console.log(user);
   return (
     <RouterProvider router={router} />
   )

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from 'react-modal';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs, getDoc, addDoc, setDoc, doc } from "firebase/firestore";
+
 import { db, provider } from '../Firebase-config';
 import { NavLink, Link, Outlet, useNavigate, useParams } from "react-router-dom";
 
