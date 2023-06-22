@@ -5,7 +5,6 @@ import { NavLink, Link, Outlet, useNavigate, useParams } from "react-router-dom"
 import Modal from 'react-modal';
 import { collection, query, where, getDocs, getDoc, addDoc, setDoc, doc } from "firebase/firestore";
 
-
 const GameModal = () => {
   const [user, setUser] = useState();
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -63,7 +62,8 @@ const GameModal = () => {
           const user_db = doc(db, "users", document.id);
           const gamesCollectionRef = collection(user_db, "games");
           const gameDocRef = await addDoc(gamesCollectionRef, {
-              gameName: gameName
+              gameName: gameName,
+              playerturn: 1
           });
 
           const playersCollectionRef = collection(gameDocRef, "players");
