@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { NavLink, Link, Outlet, useNavigate, useParams } from "react-router-dom";
-import { collection, query, where, getDocs, addDoc, setDoc, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from '../Firebase-config.jsx';
 
 import DiceModal from '../components/Dice_modal.jsx';
@@ -24,6 +24,7 @@ export default function GameLayout() {
     player4: ''
   });
   const [playerTurn, setPlayerTurn] = useState(1);
+  const [gameName, setGameName] = useState('');
 
   const authUser = async () => {
     onAuthStateChanged(auth, (userData) => {
@@ -33,11 +34,88 @@ export default function GameLayout() {
         setUser(userData);
       }
     });
-  }
+  };
 
-  const backToDashboard = () => {
-    navigate('/dashboard');
-  }
+  // Game opslaat na refresh of pagina terug -----------------------------------------------------------
+
+  const handleGoBack = async() => {
+    const confirmationMessage = 'Weet je zeker dat je terug wilt?';
+    if (window.confirm(confirmationMessage)) {
+        
+        const userDocRef = query(collection(db, "users"), where('uid', '==', user.uid));
+        const userSnapshot = await getDocs(userDocRef);
+    
+        if (userSnapshot.empty) {
+            console.error('User document not found');
+            return;
+        }
+    
+        userSnapshot.forEach(async (document) => {
+            const user_db = doc(db, "users", document.id);
+            const gamesCollectionRef = collection(user_db, "games");
+    
+            const game_db = doc(gamesCollectionRef, gameId.gameId);
+            await updateDoc(game_db, {
+                playerturn: playerTurn
+              });
+            const playersCollectionRef = collection(game_db, "players");
+            const playerDocRef = await getDocs(playersCollectionRef);
+
+            
+            playerDocRef.forEach(async (document) => {
+                if (document.id == "player1") {
+                    await updateDoc(document.ref, {
+                        position: playerPositions.player1
+                    });
+                }
+                if (document.id == "player2") {
+                    await updateDoc(document.ref, {
+                        position: playerPositions.player2
+                    });
+                }
+                if (document.id == "player3") {
+                    await updateDoc(document.ref, {
+                        position: playerPositions.player3
+                    });
+                }
+                if (document.id == "player4") {
+                    await updateDoc(document.ref, {
+                        position: playerPositions.player4
+                    });
+                }
+            });
+        });
+
+        navigate('/dashboard');
+    }
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      const confirmationMessage = 'Weet je zeker dat je deze pagina wilt verlaten?';
+      e.preventDefault();
+      e.returnValue = confirmationMessage;
+    };
+
+    const handlePopState = (e) => {
+      const confirmationMessage = 'Weet je zeker dat je deze pagina wilt verlaten?';
+      if (window.confirm(confirmationMessage)) {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+        window.history.pushState(null, null, window.location.pathname);
+      } else {
+        e.preventDefault();
+        window.history.pushState(null, null, window.location.pathname);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   // Game functionaliteiten -----------------------------------------------------------
 
@@ -63,6 +141,7 @@ export default function GameLayout() {
         gameDocRef.forEach(async (document) => {
             if (document.id == gameId.gameId) {
                 setPlayerTurn(document.data().playerturn);
+                setGameName(document.data().gameName);
             }
         });
 
@@ -144,17 +223,28 @@ export default function GameLayout() {
                         <div className="rood col-md-2"></div>
                         <div className="legend_item col-md-9">{playerNames.player2}</div>
                     </div>
-                    <div className="legend_item_container row">
-                        <div className="groen col-md-2"></div>
-                        <div className="legend_item col-md-9">{playerNames.player3}</div>
-                    </div>
+                    {playerNames.player3 ? (
+                        <div className="legend_item_container row">
+                            <div className="groen col-md-2"></div>
+                            <div className="legend_item col-md-9">{playerNames.player3}</div>
+                        </div>
+                    ): null}
+                    {playerNames.player4 ? (
                     <div className="legend_item_container row">
                         <div className="geel col-md-2"></div>
                         <div className="legend_item col-md-9">{playerNames.player4}</div>
                     </div>
+                    ): null}
                 </div>
-                <button className="btnBack" onClick={backToDashboard}>Terug</button>
+                <button className="btnBack" onClick={handleGoBack}>Terug</button>
                 <Outlet />
+                <DiceModal
+                    playerPositions={playerPositions}
+                    playerTurn={playerTurn}
+                    setPlayerTurn={setPlayerTurn}
+                    playerNames={playerNames}
+                    setPlayerPositions={setPlayerPositions}
+                />
                 <div className="game_content row">
                     <div className="upper_row_main col-md-12">
                         <div className="vak_21 corner_vak vak upper_row">
@@ -406,13 +496,6 @@ export default function GameLayout() {
                         </div>
                     </div>
                 </div>
-                <DiceModal
-                    playerPositions={playerPositions}
-                    playerTurn={playerTurn}
-                    setPlayerTurn={setPlayerTurn}
-                    playerNames={playerNames}
-                    setPlayerPositions={setPlayerPositions}
-                />
             </div>
         </div>
     )
