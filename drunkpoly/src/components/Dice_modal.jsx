@@ -10,6 +10,8 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
     const [showResult, setShowResult] = useState(false);
     const [showAssignmentModal, setShowAssignmentModal] = useState(false);
     const [aantalPlayers, setAantalPlayers] = useState(0);
+    const [movedPosition, setMovedPosition] = useState(false);
+    const [skipTurn, setSkipTurn] = useState(false);
     const [playerPrisonRounds, setplayerPrisonRounds] = useState({
         player1: 0,
         player2: 0,
@@ -24,11 +26,7 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
     };
 
     const roleTheDice = () => {
-        if (playerTurn === 1) {
-            setDice(8);
-        } else {
-            setDice(Math.floor(Math.random() * 12) + 1);
-        }
+        setDice(Math.floor(Math.random() * 12) + 2);
         setShowDice(true);
         setShowResult(true);
     };
@@ -36,25 +34,35 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
     const handleButtonClick = () => {
         const currentPosition = playerPositions[`player${playerTurn}`];
 
-        // Check if in prison. If yes, then don't roll the dice
+        // Naar gevangenis
         if (currentPosition === 31) {
             const inPrisonRounds = playerPrisonRounds[`player${playerTurn}`] || 0;
             if (inPrisonRounds < 3) {
-            setPlayerTurn((prevState) => {
-                const nextPlayerTurn = prevState === aantalPlayers ? 1 : prevState + 1;
-                setplayerPrisonRounds((prevPrisonRounds) => ({
-                ...prevPrisonRounds,
-                [`player${playerTurn}`]: inPrisonRounds + 1
-                }));
-                return nextPlayerTurn;
-            });
-            return;
+                setPlayerTurn((prevState) => {
+                    const nextPlayerTurn = prevState === aantalPlayers ? 1 : prevState + 1;
+                    setplayerPrisonRounds((prevPrisonRounds) => ({
+                        ...prevPrisonRounds,
+                        [`player${playerTurn}`]: inPrisonRounds + 1
+                    }));
+                    return nextPlayerTurn;
+                });
+                return;
             } else {
-            setplayerPrisonRounds((prevPrisonRounds) => ({
-                ...prevPrisonRounds,
-                [`player${playerTurn}`]: 0
-            }));
+                setplayerPrisonRounds((prevPrisonRounds) => ({
+                    ...prevPrisonRounds,
+                    [`player${playerTurn}`]: 0
+                }));
             }
+        // Beurt overslaan
+        } else if (currentPosition === 20) {
+            if (skipTurn === true) {
+                setPlayerTurn((prevState) => {
+                    const nextPlayerTurn = prevState === aantalPlayers ? 1 : prevState + 1;
+                    return nextPlayerTurn;
+                });
+                setSkipTurn(false);
+                return;
+            } 
         }
 
         roleTheDice();
@@ -89,7 +97,13 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
 
     const handleCloseAssignmentModal = () => {
         setShowAssignmentModal(false);
-        setShowResult(false);
+
+        if (movedPosition === true) {
+            setShowResult(true);
+        } else {
+            setShowResult(false);
+        }
+        setMovedPosition(false);
     };
 
     useEffect(() => {
@@ -123,6 +137,10 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
                 <p>Druk op dobbel om door te gaan!</p>
             )}
 
+            {playerPositions[`player${playerTurn}`] === 20 && (
+                <p>Je moet je beurt overslaan druk op dobbel om door te gaan!</p>
+            )}
+
             {!showResult && (
                 <button onClick={handleButtonClick}>Dobbel</button>
             )}
@@ -141,11 +159,14 @@ const DiceModal = ({ setPlayerTurn, playerPositions, playerTurn, playerNames, se
                 playerTurn={playerTurn}
                 playerNames={playerNames}
                 playerPositions={playerPositions}
+                setPlayerPositions={setPlayerPositions}
                 onClose={handleCloseAssignmentModal}
                 aantalPlayers={aantalPlayers}
                 setPlayerTurn={setPlayerTurn}
                 setplayerPrisonRounds={setplayerPrisonRounds}
                 playerPrisonRounds={playerPrisonRounds}
+                setMovedPosition={setMovedPosition}
+                setSkipTurn={setSkipTurn}
             />
         )}
     </div>

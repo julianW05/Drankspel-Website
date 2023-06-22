@@ -187,13 +187,15 @@
 
 .ReactModal__Content {
   position: unset !important;
-  width: 30%;
+  width: 35%;
   text-align: center;
   display: flex;
   flex-direction: column; 
   row-gap: 50px;
+  max-height: 75%;
+  overflow-y: scroll;
   border-radius: 10px !important;
-  padding: 50px 0px !important;
+  padding: 50px 50px !important;
 }
 
 .ReactModal__Content form {

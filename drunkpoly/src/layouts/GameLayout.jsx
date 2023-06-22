@@ -217,6 +217,10 @@ export default function GameLayout() {
                 <div className="legend">
                     <div className="legend_item_container row"><strong>{gameName}</strong></div>
                     <div className="legend_item_container row">
+
+                        <div className="legend_item col-md-9">{gameName}</div>
+                    </div>
+                    <div className="legend_item_container row">
                         <div className="blauw col-md-2"></div>
                         <div className="legend_item col-md-9">{playerNames.player1}</div>
                     </div>
