@@ -5,6 +5,10 @@
   --secondary-color-hover: #cc431d;
   --third-color: #37c1f0;
   --third-color-hover: #1c95bd;
+  --player-1-color: #1d8393;
+  --player-2-color: #d92c2e;
+  --player-3-color: #2d9730;
+  --player-4-color: #dfdf2c;
 }
 
 #root {
@@ -64,7 +68,6 @@
 }
 
 .login .title_content .line {
-  border: #37c1f0 2px solid;
   margin-left: 12px;
 }
 
@@ -161,7 +164,8 @@
   height: 100px;
   text-decoration: none;
   color: white;
-  background-color: var(--primary-color);
+  background-color: #d92c2fad;
+  border-radius: 10px;
   transition: all 0.4s ease-in-out;
 }
 
@@ -183,16 +187,24 @@
 
 .ReactModal__Content {
   position: unset !important;
-  width: 40%;
-  height: 60%;
+  width: 30%;
   text-align: center;
   display: flex;
   flex-direction: column; 
-  row-gap: 20px;
+  row-gap: 50px;
   border-radius: 10px !important;
+  padding: 50px 0px !important;
 }
 
 .ReactModal__Content form {
+  display: flex;
+  flex-direction: column; 
+  row-gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ReactModal__Content form div {
   display: flex;
   flex-direction: column; 
   row-gap: 10px;
@@ -208,6 +220,7 @@
   background-color: var(--secondary-color);
   border-radius: 6px;
   transition: all 0.4s ease-in-out;
+  margin-top: 20px;
 }
 
 .ReactModal__Content button:hover {
@@ -236,6 +249,37 @@
   border-radius: 10px;
 }
 
+.game .legend {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 40px;
+  color: white;
+  width: 150px;
+  justify-content: space-evenly;
+  align-items: center;
+  row-gap: 20px;
+  background-color: #3f3f3fa4;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.game .legend .legend_item_container {
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.game .legend .legend_item {
+  display: flex;
+  align-items: center;
+}
+
+.game .legend .blauw, .game .legend .rood, .game .legend .geel, .game .legend .groen {
+  height: 24px;
+  border-radius: 50%;
+}
+
 .game .btnBack:hover {
   background-color: var(--third-color-hover);
 }
@@ -256,22 +300,19 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding: 7px 9px;
+  padding: 0.4% 0.3%;
 }
 
 .game .game_content .vak {
-  background-color: #3f3f3f80;
-  border: #1c95bd 2px solid;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-content: space-evenly;
   row-gap: 10px;
-  column-gap: 20px;
+  column-gap: 20%;
 }
 
 .game .game_content .upper_row {
-  height: 100px;
   width: 8%;
   padding: 15px 0px;
 }
@@ -284,23 +325,20 @@
   height: 100px;
 }
 
-.upper_row_main, .left_row_main, .right_row_main, .lower_row_main, .center {
-  border: orchid 2px solid;
-}
-
 .game .game_content .side_row {
   width: 100%;
-  height: 10.5%;
+  height: 10.2%;
   padding: 0px 15px;
 }
 
 .game .game_content .left_row_main, .game .game_content .right_row_main {
   width: 11.5%;
-  height: 627px;
+  height: 600px;
   padding: 0px;
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
+  row-gap: 1%;
+  margin-top: 0.4%;
 }
 
 .game .game_content .center {
@@ -309,7 +347,7 @@
 }
 
 .game .game_content .corner_vak {
-  width: 11.5% !important;
+  width: 12.5% !important;
   padding: 0px !important;
 }
 
@@ -320,17 +358,17 @@
 }
 
 .blauw {
-  background-color: #1c95bd;
+  background-color: var(--player-1-color);
 }
 
 .rood {
-  background-color: #bd1c1c;
-}
-
-.geel {
-  background-color: #bdbd1c;
+  background-color: var(--player-2-color);
 }
 
 .groen {
-  background-color: #1cbd1c;
+  background-color: var(--player-3-color);
+}
+
+.geel {
+  background-color: var(--player-4-color);
 }
