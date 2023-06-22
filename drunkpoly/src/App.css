@@ -249,6 +249,24 @@
   border-radius: 10px;
 }
 
+.game .btnBack:hover {
+  background-color: var(--third-color-hover);
+}
+
+.game .btnNext {
+  position: absolute;
+  top: 0;
+  right: 10%;
+  margin: 20px;
+  background-color: var(--third-color);
+  transition: all 0.4s ease-in-out;
+  border-radius: 10px;
+}
+
+.game .btnNext:hover {
+  background-color: var(--third-color-hover);
+}
+
 .game .legend {
   display: flex;
   flex-direction: column;
@@ -278,10 +296,6 @@
 .game .legend .blauw, .game .legend .rood, .game .legend .geel, .game .legend .groen {
   height: 24px;
   border-radius: 50%;
-}
-
-.game .btnBack:hover {
-  background-color: var(--third-color-hover);
 }
 
 .game .blur_container {
