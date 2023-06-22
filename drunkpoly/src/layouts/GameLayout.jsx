@@ -33,15 +33,23 @@ export default function GameLayout() {
     return (
         <div className="game">
             <div className="blur_container">
-                <div className="legend row">
-                    <div className="blauw col-md-2"></div>
-                    <div className="legend_item col-md-9">Speler 1</div>
-                    <div className="rood col-md-2"></div>
-                    <div className="legend_item col-md-9">Speler 2</div>
-                    <div className="groen col-md-2"></div>
-                    <div className="legend_item col-md-9">Speler 3</div>
-                    <div className="geel col-md-2"></div>
-                    <div className="legend_item col-md-9">Speler 4</div>
+                <div className="legend">
+                    <div className="legend_item_container row">
+                        <div className="blauw col-md-2"></div>
+                        <div className="legend_item col-md-9">Speler 1</div>
+                    </div>
+                    <div className="legend_item_container row">
+                        <div className="rood col-md-2"></div>
+                        <div className="legend_item col-md-9">Speler 2</div>
+                    </div>
+                    <div className="legend_item_container row">
+                        <div className="groen col-md-2"></div>
+                        <div className="legend_item col-md-9">Speler 3</div>
+                    </div>
+                    <div className="legend_item_container row">
+                        <div className="geel col-md-2"></div>
+                        <div className="legend_item col-md-9">Speler 4</div>
+                    </div>
                 </div>
                 <button className="btnBack" onClick={backToDashboard}>Terug</button>
                 <Outlet />
