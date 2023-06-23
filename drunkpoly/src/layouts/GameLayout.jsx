@@ -7,7 +7,7 @@ import { db } from '../Firebase-config.jsx';
 import DiceModal from '../components/Dice_modal.jsx';
 
 export default function GameLayout() {
-  const gameId = useParams();
+  const { gameId } = useParams();
   const [user, setUser] = useState();
   const navigate = useNavigate();
   const auth = getAuth();
@@ -119,83 +119,85 @@ export default function GameLayout() {
 
   // Get the gamedata from the database -----------------------------------------------------------
   const getUser = async () => {
-    const userDocRef = query(collection(db, "users"), where('uid', '==', user.uid));
-    const userSnapshot = await getDocs(userDocRef);
+    if (user) {
+        console.log("user");
+        const userDocRef = query(collection(db, "users"), where('uid', '==', user.uid));
+        const userSnapshot = await getDocs(userDocRef);
 
-    if (userSnapshot.empty) {
-        console.error('User document not found');
-        return;
-    }
+        if (userSnapshot.empty) {
+            console.error('User document not found');
+            return;
+        }
 
-    userSnapshot.forEach(async (document) => {
-        const user_db = doc(db, "users", document.id);
-        const gamesCollectionRef = collection(user_db, "games");
-        const gameDocRef = await getDocs(gamesCollectionRef);
+        userSnapshot.forEach(async (document) => {
+            const user_db = doc(db, "users", document.id);
+            const gamesCollectionRef = collection(user_db, "games");
+            const gameDocRef = await getDocs(gamesCollectionRef);
 
-        const game_db = doc(gamesCollectionRef, gameId.gameId);
-        const playersCollectionRef = collection(game_db, "players");
-        const playerDocRef = await getDocs(playersCollectionRef);
+            const game_db = doc(gamesCollectionRef, gameId);
+            const playersCollectionRef = collection(game_db, "players");
+            const playerDocRef = await getDocs(playersCollectionRef);
 
-        gameDocRef.forEach(async (document) => {
-            if (document.id == gameId.gameId) {
-                setPlayerTurn(document.data().playerturn);
-                setGameName(document.data().gameName);
-            }
-        });
+            gameDocRef.forEach(async (document) => {
+                if (document.id == gameId.gameId) {
+                    setPlayerTurn(document.data().playerturn);
+                    setGameName(document.data().gameName);
+                }
+            });
 
-        playerDocRef.forEach(async (document) => {
-            if (document.id == "player1") {
-                // Player postion
-                setPlayerPositions((prevState) => ({
-                    ...prevState,
-                    player1: document.data().position
-                }));
-                // Player name
-                setPlayerNames((prevState) => ({
-                    ...prevState,
-                    player1: document.data().name
-                }));
-            } else if (document.id == "player2") {
-                // Player postion
-                setPlayerPositions((prevState) => ({
-                    ...prevState,
-                    player2: document.data().position
-                }));
-                // Player name
-                setPlayerNames((prevState) => ({
-                    ...prevState,
-                    player2: document.data().name
-                }));
-            } else if (document.id == "player3") {
-                // Player postion
-                setPlayerPositions((prevState) => ({
-                    ...prevState,
-                    player3: document.data().position
-                }));
-                // Player name
-                setPlayerNames((prevState) => ({
-                    ...prevState,
-                    player3: document.data().name
-                }));
-            } else if (document.id == "player4") {
-                // Player postion
-                setPlayerPositions((prevState) => ({
-                    ...prevState,
-                    player4: document.data().position
-                }));
-                // Player name
-                setPlayerNames((prevState) => ({
-                    ...prevState,
-                    player4: document.data().name
-                }));
-            } else {
-                console.error('Player document not found');
-                return;
-            }
-            
-        });
-
-    }); 
+            playerDocRef.forEach(async (document) => {
+                if (document.id == "player1") {
+                    // Player postion
+                    setPlayerPositions((prevState) => ({
+                        ...prevState,
+                        player1: document.data().position
+                    }));
+                    // Player name
+                    setPlayerNames((prevState) => ({
+                        ...prevState,
+                        player1: document.data().name
+                    }));
+                } else if (document.id == "player2") {
+                    // Player postion
+                    setPlayerPositions((prevState) => ({
+                        ...prevState,
+                        player2: document.data().position
+                    }));
+                    // Player name
+                    setPlayerNames((prevState) => ({
+                        ...prevState,
+                        player2: document.data().name
+                    }));
+                } else if (document.id == "player3") {
+                    // Player postion
+                    setPlayerPositions((prevState) => ({
+                        ...prevState,
+                        player3: document.data().position
+                    }));
+                    // Player name
+                    setPlayerNames((prevState) => ({
+                        ...prevState,
+                        player3: document.data().name
+                    }));
+                } else if (document.id == "player4") {
+                    // Player postion
+                    setPlayerPositions((prevState) => ({
+                        ...prevState,
+                        player4: document.data().position
+                    }));
+                    // Player name
+                    setPlayerNames((prevState) => ({
+                        ...prevState,
+                        player4: document.data().name
+                    }));
+                } else {
+                    console.error('Player document not found');
+                    return;
+                }
+                
+            });
+        }); 
+    };
 }
 
 
@@ -208,6 +210,13 @@ export default function GameLayout() {
       getUser();
     }
   }, [user]);
+
+  useEffect(() => {
+    console.log(gameId);
+    if (gameId) {
+      getUser();
+    }
+  }, [gameId]);
     
     return (
         <div className="game">
